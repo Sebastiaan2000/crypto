@@ -22,9 +22,6 @@ def get_crossover(coin, tf, ma_x, ma_y):
     if (tf == '2H'):
         tf = str(Client.KLINE_INTERVAL_2HOUR)
         interval = 2
-    if (tf == '3H'):
-        tf = str(Client.KLINE_INTERVAL_3HOUR)
-        interval = 3
     if (tf == '4H'):
         tf = str(Client.KLINE_INTERVAL_4HOUR)
         interval = 4
@@ -94,4 +91,4 @@ coins_list = ['BTCUSDT','ETHUSDT', 'LTCUSDT', 'BNBUSDT', 'ICXUSDT', 'VETUSDT', '
 
 for coins in coins_list:
     # usage: coins list, timeframe, ma_x, ma_y
-    get_crossover(coins, '1H', 10, 20)
+    get_crossover(coins, '4H', 10, 20)
