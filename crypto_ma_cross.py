@@ -39,50 +39,50 @@ def get_crossover(coin, tf, ma_x, ma_y):
         interval = 24
         
     klines = client.get_historical_klines(str(coin), tf, "1 Jan 2020")
-    ma_10_dict = {}
-    ma_20_dict = {}
-    ma_10_array = []
-    ma_20_array = []
-    time_ma_10 = []
-    time_ma_20 = []
+    ma_1_dict = {}
+    ma_2_dict = {}
+    ma_1_array = []
+    ma_2_array = []
+    time_ma_1 = []
+    time_ma_2 = []
 
     for i in range(len(klines)):
         if (i > ma_x):
-            time_ma_10.append(klines[i][0])
+            time_ma_1.append(klines[i][0])
         if (i > ma_y):
-            time_ma_20.append(klines[i][0])
-            ma_10_sum = 0
-            ma_20_sum = 0
+            time_ma_2.append(klines[i][0])
+            ma_1_sum = 0
+            ma_2_sum = 0
             for x in klines[i-ma_x:i]:
-                ma_10_sum += float(x[4])
+                ma_1_sum += float(x[4])
             for x in klines[i-ma_y:i]:
-                ma_20_sum += float(x[4])
-            ma_10 = ma_10_sum / ma_x
-            ma_20 = ma_20_sum / ma_y
-            ma_10_array.append(ma_10)
-            ma_20_array.append(ma_20)
-            ma_10_dict[int(klines[i][0])] = ma_10
-            ma_20_dict[int(klines[i][0])] = ma_20
+                ma_2_sum += float(x[4])
+            ma_1 = ma_1_sum / ma_x
+            ma_2 = ma_2_sum / ma_y
+            ma_1_array.append(ma_1)
+            ma_2_array.append(ma_2)
+            ma_1_dict[int(klines[i][0])] = ma_1
+            ma_2_dict[int(klines[i][0])] = ma_2
 
     intersect(A=Point(0,0), B=Point(1,100), C=Point(0,1), D=Point(1,50))
     # check if the ma_10 crossed the ma_20
     crossovers = []
-    for y in range(1, len(ma_10_array)-1):
-        A=Point(time_ma_20[y-1], ma_10_array[y-1])
-        B=Point(time_ma_20[y], ma_10_array[y])
-        C=Point(time_ma_20[y-1], ma_20_array[y-1]) 
-        D=Point(time_ma_20[y], ma_20_array[y])
+    for y in range(1, len(ma_1_array)-1):
+        A=Point(time_ma_2[y-1], ma_1_array[y-1])
+        B=Point(time_ma_2[y], ma_1_array[y])
+        C=Point(time_ma_2[y-1], ma_2_array[y-1]) 
+        D=Point(time_ma_2[y], ma_2_array[y])
         if (intersect(A,B,C,D)):
-            delta_10_ma = (B.y - A.y) / (B.x - A.x)
-            delta_20_ma = (D.y - C.y) / (D.x - C.x)
-            if (delta_10_ma < delta_20_ma):
+            delta_1_ma = (B.y - A.y) / (B.x - A.x)
+            delta_2_ma = (D.y - C.y) / (D.x - C.x)
+            if (delta_1_ma < delta_2_ma):
                 cross_direction = '-'
-            if (delta_10_ma > delta_20_ma):
+            if (delta_1_ma > delta_2_ma):
                 cross_direction = '+'
             #print (delta_10_ma, delta_20_ma)
             #print (A.x, B.x, C.x, D.x)
             #dt_object = datetime.utcfromtimestamp(int(time_ma_20[y-1])/1000)
-            crossovers.append([cross_direction, int(time_ma_20[y-1])/1000])
+            crossovers.append([cross_direction, int(time_ma_2[y-1])/1000])
     if (len(crossovers) != 0):
         last_crossover_direction = crossovers[-1][0]
         last_crossover = crossovers[-1][1]
