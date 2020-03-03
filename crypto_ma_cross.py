@@ -133,7 +133,7 @@ ma_list = [[10,20], [7,20], [20,50], [20,100]]
 #print ('PAIR', ma_list[0][0] , '/' , ma_list[0][1] , ' , ' ,ma_list[1][0] , '/' , ma_list[1][1])
 #df = pd.DataFrame({'X':['1','2','3','4']}, index=[1,2,3,400])
 df2 = pd.DataFrame()
-for coins in list:
+for coins in list[:10]:
     # usage: coins list, timeframe, ma_x, ma_y
     new_result = get_crossover(coins, str(timeframe), ma_list)
     df2 = df2.append(new_result, ignore_index=True)
