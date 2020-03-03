@@ -2,6 +2,8 @@ from binance.client import Client
 from datetime import datetime
 import time
 import math
+import pandas as pd
+
 class Point: 
     def __init__(self, x, y): 
         self.x = x 
@@ -21,6 +23,13 @@ BTC_pairs.remove('VENBTC')
 USDT_pairs.remove('VENUSDT')
 BTC_pairs.remove('BCCBTC')
 USDT_pairs.remove('BCCUSDT')
+BTC_pairs.remove('BCHSVBTC')
+USDT_pairs.remove('BCHSVUSDT')
+BTC_pairs.remove('BCHABCBTC')
+USDT_pairs.remove('BCHABCUSDT')
+USDT_pairs.remove('USDSBUSDT')
+
+
 
 def ccw(A,B,C):
     return (C.y-A.y) * (B.x-A.x) > (B.y-A.y) * (C.x-A.x)
@@ -28,41 +37,40 @@ def ccw(A,B,C):
 # Return true if line segments AB and CD intersect
 def intersect(A,B,C,D):
     return ccw(A,C,D) != ccw(B,C,D) and ccw(A,B,C) != ccw(A,B,D)
-    
+
 def get_crossover(coin, tf, mas):
     result = []
     result.append(coin)
+    if (tf == '1H'):
+        tf = str(Client.KLINE_INTERVAL_1HOUR)
+        interval = 1
+    if (tf == '2H'):
+        tf = str(Client.KLINE_INTERVAL_2HOUR)
+        interval = 2
+    if (tf == '3H'):
+        tf = str(Client.KLINE_INTERVAL_3HOUR)
+        interval = 3
+    if (tf == '4H'):
+        tf = str(Client.KLINE_INTERVAL_4HOUR)
+        interval = 4
+    if (tf == '6H'):
+        tf = str(Client.KLINE_INTERVAL_6HOUR)
+        interval = 6
+    if (tf == '12H'):
+        tf = str(Client.KLINE_INTERVAL_12HOUR)
+        interval = 12
+    if (tf == '1D'):
+        tf = str(Client.KLINE_INTERVAL_1DAY)
+        interval = 24
+    limit = (datetime.utcfromtimestamp((time.time()-(500*interval*60*60))))
+    klines = client.get_historical_klines(str(coin), tf, str(limit))
+    ma_1_dict = {}
+    ma_2_dict = {}
+    ma_1_array = []
+    ma_2_array = []
+    time_ma_1 = []
+    time_ma_2 = []
     for ma_s in mas:
-        if (tf == '1H'):
-            tf = str(Client.KLINE_INTERVAL_1HOUR)
-            interval = 1
-        if (tf == '2H'):
-            tf = str(Client.KLINE_INTERVAL_2HOUR)
-            interval = 2
-        if (tf == '3H'):
-            tf = str(Client.KLINE_INTERVAL_3HOUR)
-            interval = 3
-        if (tf == '4H'):
-            tf = str(Client.KLINE_INTERVAL_4HOUR)
-            interval = 4
-        if (tf == '6H'):
-            tf = str(Client.KLINE_INTERVAL_6HOUR)
-            interval = 6
-        if (tf == '12H'):
-            tf = str(Client.KLINE_INTERVAL_12HOUR)
-            interval = 12
-        if (tf == '1D'):
-            tf = str(Client.KLINE_INTERVAL_1DAY)
-            interval = 24
-
-        klines = client.get_historical_klines(str(coin), tf, '1 Jan 2020')
-        ma_1_dict = {}
-        ma_2_dict = {}
-        ma_1_array = []
-        ma_2_array = []
-        time_ma_1 = []
-        time_ma_2 = []
-
         for i in range(len(klines)):
             if (i > ma_s[0]):
                 time_ma_1.append(klines[i][0])
@@ -107,9 +115,11 @@ def get_crossover(coin, tf, mas):
             result.append(str(last_crossover_direction))
             result.append(str(math.ceil(time_since_cross)))
         else:
-            None
-    #print (len(klines))
-    return result
+            result.append('NONE')
+            result.append('NONE')
+    df = pd.DataFrame([result], columns=['Pair', str(mas[0]), '#', str(mas[1]), '#', str(mas[2]), '#', str(mas[3]), '#'])
+    return df
+    #return result
 
 timeframe = input('timeframe')
 pair = input ('pair')
@@ -119,10 +129,12 @@ elif (pair == 'BTC'):
     list = BTC_pairs
 elif (pair == 'USDT'):
     list = USDT_pairs
-
-ma_list = [[10,20], [7,20]]
-print ('PAIR', ma_list[0][0] , '/' , ma_list[0][1] , ' , ' ,ma_list[1][0] , '/' , ma_list[1][1])
+ma_list = [[10,20], [7,20], [20,50], [20,100]]
+#print ('PAIR', ma_list[0][0] , '/' , ma_list[0][1] , ' , ' ,ma_list[1][0] , '/' , ma_list[1][1])
+#df = pd.DataFrame({'X':['1','2','3','4']}, index=[1,2,3,400])
+df2 = pd.DataFrame()
 for coins in list:
     # usage: coins list, timeframe, ma_x, ma_y
     new_result = get_crossover(coins, str(timeframe), ma_list)
-    print(','.join(new_result[::1]))
+    df2 = df2.append(new_result, ignore_index=True)
+df2
