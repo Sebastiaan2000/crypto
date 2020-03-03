@@ -29,8 +29,6 @@ BTC_pairs.remove('BCHABCBTC')
 USDT_pairs.remove('BCHABCUSDT')
 USDT_pairs.remove('USDSBUSDT')
 
-
-
 def ccw(A,B,C):
     return (C.y-A.y) * (B.x-A.x) > (B.y-A.y) * (C.x-A.x)
 
@@ -117,7 +115,16 @@ def get_crossover(coin, tf, mas):
         else:
             result.append('NONE')
             result.append('NONE')
-    df = pd.DataFrame([result], columns=['Pair', str(mas[0]), '#', str(mas[1]), '#', str(mas[2]), '#', str(mas[3]), '#'])
+    klines2 = client.get_historical_klines(str(coin), str(Client.KLINE_INTERVAL_1DAY), '10 days ago utc')
+    volume_today = klines2[-1][5]
+    volume_1_day_ago = klines2[-2][5]
+    volume_3_days_ago = klines2[-4][5]
+    volume_5_days_ago = klines2[-6][5]
+    volume_7_days_ago = klines2[-8][5]
+    result.append(str("{0:.2f}".format((float(volume_today)-float(volume_1_day_ago)) / float(volume_1_day_ago) * 100)) + '%')
+    result.append(str("{0:.2f}".format((float(volume_today)-float(volume_3_days_ago)) / float(volume_3_days_ago) * 100)) + '%')
+    result.append(str("{0:.2f}".format((float(volume_today)-float(volume_7_days_ago)) / float(volume_7_days_ago) * 100)) + '%')
+    df = pd.DataFrame([result], columns=['Pair', str(mas[0]), '#', str(mas[1]), '#', str(mas[2]), '#', str(mas[3]), '#','1D', '3D', '7D'])
     return df
     #return result
 
@@ -131,7 +138,6 @@ elif (pair == 'USDT'):
     list = USDT_pairs
 ma_list = [[10,20], [7,20], [20,50], [20,100]]
 #print ('PAIR', ma_list[0][0] , '/' , ma_list[0][1] , ' , ' ,ma_list[1][0] , '/' , ma_list[1][1])
-#df = pd.DataFrame({'X':['1','2','3','4']}, index=[1,2,3,400])
 df2 = pd.DataFrame()
 for coins in list[:10]:
     # usage: coins list, timeframe, ma_x, ma_y
