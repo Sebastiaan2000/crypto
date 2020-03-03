@@ -19,6 +19,8 @@ for ticker in tickers:
         USDT_pairs.append(ticker['symbol'])
 BTC_pairs.remove('VENBTC')
 USDT_pairs.remove('VENUSDT')
+BTC_pairs.remove('BCCBTC')
+USDT_pairs.remove('BCCUSDT')
 
 def ccw(A,B,C):
     return (C.y-A.y) * (B.x-A.x) > (B.y-A.y) * (C.x-A.x)
@@ -53,7 +55,7 @@ def get_crossover(coin, tf, mas):
             tf = str(Client.KLINE_INTERVAL_1DAY)
             interval = 24
 
-        klines = client.get_historical_klines(str(coin), tf, 1000)
+        klines = client.get_historical_klines(str(coin), tf, '1 Jan 2020')
         ma_1_dict = {}
         ma_2_dict = {}
         ma_1_array = []
@@ -106,6 +108,7 @@ def get_crossover(coin, tf, mas):
             result.append(str(math.ceil(time_since_cross)))
         else:
             None
+    #print (len(klines))
     return result
 
 timeframe = input('timeframe')
