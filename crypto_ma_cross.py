@@ -123,7 +123,7 @@ def get_crossover(coin, tf, mas):
     volume_7_days = float(klines2[-2][5]) + float(klines2[-3][5]) + float(klines2[-4][5]) + float(klines2[-5][5]) + float(klines2[-6][5]) + float(klines2[-7][5]) + float(klines2[-8][5])
     volume_7_14_days = float(klines2[-9][5]) + float(klines2[-10][5]) + float(klines2[-11][5]) + float(klines2[-12][5]) + float(klines2[-13][5]) + float(klines2[-14][5]) + float(klines2[-15][5])
     result.append(str("{0:.2f}".format(float(klines[-1][4]))))
-    result.append(str("{0:.2f}".format((float(klines[-2][5]) * float(klines[-1][4])))))
+    result.append(str("{0:.0f}".format((float(klines[-2][5]) * float(klines[-1][4])))))
     result.append(str("{0:.2f}".format((float(volume_1_day)-float(volume_2_day)) / float(volume_2_day) * 100)) + '%')
     result.append(str("{0:.2f}".format((float(volume_3_days)-float(volume_3_6_days)) / float(volume_3_6_days) * 100)) + '%')
     result.append(str("{0:.2f}".format((float(volume_7_days)-float(volume_7_14_days)) / float(volume_7_14_days) * 100)) + '%')
@@ -143,8 +143,9 @@ elif (pair == 'USDT'):
 ma_list = [[10,20], [7,20], [20,50], [20,100]]
 #print ('PAIR', ma_list[0][0] , '/' , ma_list[0][1] , ' , ' ,ma_list[1][0] , '/' , ma_list[1][1])
 df2 = pd.DataFrame()
-for coins in list[:10]:
+for coins in list:
     # usage: coins list, timeframe, ma_x, ma_y
     new_result = get_crossover(coins, str(timeframe), ma_list)
     df2 = df2.append(new_result, ignore_index=True)
-df2
+with pd.option_context('display.max_rows', None):
+    return df2
