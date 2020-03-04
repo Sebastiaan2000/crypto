@@ -122,11 +122,13 @@ def get_crossover(coin, tf, mas):
     volume_3_6_days = float(klines2[-5][5]) + float(klines2[-6][5]) + float(klines2[-7][5])
     volume_7_days = float(klines2[-2][5]) + float(klines2[-3][5]) + float(klines2[-4][5]) + float(klines2[-5][5]) + float(klines2[-6][5]) + float(klines2[-7][5]) + float(klines2[-8][5])
     volume_7_14_days = float(klines2[-9][5]) + float(klines2[-10][5]) + float(klines2[-11][5]) + float(klines2[-12][5]) + float(klines2[-13][5]) + float(klines2[-14][5]) + float(klines2[-15][5])
+    result.append(str(klines[-1][4]))
+    result.append(str(klines[-2][5]))
     result.append(str("{0:.2f}".format((float(volume_1_day)-float(volume_2_day)) / float(volume_2_day) * 100)) + '%')
     result.append(str("{0:.2f}".format((float(volume_3_days)-float(volume_3_6_days)) / float(volume_3_6_days) * 100)) + '%')
     result.append(str("{0:.2f}".format((float(volume_7_days)-float(volume_7_14_days)) / float(volume_7_14_days) * 100)) + '%')
 
-    df = pd.DataFrame([result], columns=['Pair', str(mas[0]), '#', str(mas[1]), '#', str(mas[2]), '#', str(mas[3]), '#','1D', '3D', '7D'])
+    df = pd.DataFrame([result], columns=['Pair', str(mas[0]), '#', str(mas[1]), '#', str(mas[2]), '#', str(mas[3]), '#', 'Price', '24 HVolume','1D', '3D', '7D'])
     return df
     #return result
 
