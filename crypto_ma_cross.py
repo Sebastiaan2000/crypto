@@ -129,7 +129,6 @@ def get_crossover(coin, tf, mas):
     result.append(str("{0:.2f}".format((float(volume_7_days)-float(volume_7_14_days)) / float(volume_7_14_days) * 100)) + '%')
 
     df = pd.DataFrame([result], columns=['Pair', str(mas[0]), '#', str(mas[1]), '#', str(mas[2]), '#', str(mas[3]), '#', 'Price', '24 HVolume','1D', '3D', '7D'])
-    print(coin)
     return df
     #return result
 
@@ -145,7 +144,7 @@ if (pair == 'BTC'):
     new_list.append('LOOMBTC')
     new_list.append('BQXBTC')
 elif (pair == 'USDT'):
-    no_usdt = ['POLY', 'POWR', 'MANA', 'KMD', 'DATA', 'LEND', 'ELF', 'ARN', 'EVX','REP','GRS', 'PPT', 'TNT','BLZ','RDN','XEM', 'POE','DLT', 'WPR','AST','BRD','CND', 'ZEN', 'PHB','PIVX','LRC','QLC','SNT']
+    no_usdt = ['POLY', 'POWR', 'MANA', 'KMD', 'DATA', 'LEND', 'ELF', 'ARN', 'EVX','REP','GRS', 'PPT', 'TNT','BLZ','RDN','XEM', 'POE','DLT', 'WPR','AST','BRD','CND', 'ZEN', 'PHB','PIVX','LRC', 'MTH', 'QLC','SNT']
     for y in coins_list:
         if (y not in no_usdt):
             usd_pair = str(y + 'USDT')
