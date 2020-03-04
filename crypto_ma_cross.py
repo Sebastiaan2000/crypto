@@ -145,7 +145,7 @@ if (pair == 'BTC'):
     new_list.append('LOOMBTC')
     new_list.append('BQXBTC')
 elif (pair == 'USDT'):
-    no_usdt = ['POLY', 'POWR', 'MANA', 'KMD', 'LEND', 'ELF', 'ARN', 'EVX','REP','GRS', 'PPT', 'TNT','BLZ','RDN','XEM', 'POE','DLT', 'WPR','AST','BRD','CND', 'ZEN', 'PHB','PIVX','LRC','QLC','SNT']
+    no_usdt = ['POLY', 'POWR', 'MANA', 'KMD', 'DATA', 'LEND', 'ELF', 'ARN', 'EVX','REP','GRS', 'PPT', 'TNT','BLZ','RDN','XEM', 'POE','DLT', 'WPR','AST','BRD','CND', 'ZEN', 'PHB','PIVX','LRC','QLC','SNT']
     for y in coins_list:
         if (y not in no_usdt):
             usd_pair = str(y + 'USDT')
