@@ -135,7 +135,7 @@ def get_crossover(coin, tf, mas):
 timeframe = input('timeframe')
 pair = input ('pair')
 new_list = []
-coins_list = ['BTC','ETH','XRP','LTC','BCH','EOS','BNB','XTZ ','LINK','ADA','XLM','XMR','DASH','NEO','ETC','TRX','ATOM','HEDG','ONT','VET','BAT','WRX','COTI','KNC','ALGO','RVN','REN','KAVA','ONE','LOOM','ENJ','AION','BQX','POLY ','POWR','FET','TROY','MANA','DATA','ZEC','XEM ','ZRX','RDN','IOST','TOMO','BLZ','LSK','PERL','WAN','ZIL','OMG','BEAM','TNT','DUSK','PPT','GRS','REP','EVX','ARN','ELF','LEND','STRAT','COS','MTH','RPA','KMD','SNT','FUN','QLC','ONG','LRC','PIVX','VITE','PHB','ZEN','GTO','CND','BRD','AST','WPR','DLT','POE','BTS']
+coins_list = ['BTC','ETH','XRP','LTC','BCH','EOS','BNB','XTZ','LINK','ADA','XLM','XMR','DASH','NEO','ETC','TRX','ATOM','HEDG','ONT','VET','BAT','WRX','COTI','KNC','ALGO','RVN','REN','KAVA','ONE','LOOM','ENJ','AION','BQX','POLY ','POWR','FET','TROY','MANA','DATA','ZEC','XEM ','ZRX','RDN','IOST','TOMO','BLZ','LSK','PERL','WAN','ZIL','OMG','BEAM','TNT','DUSK','PPT','GRS','REP','EVX','ARN','ELF','LEND','STRAT','COS','MTH','RPA','KMD','SNT','FUN','QLC','ONG','LRC','PIVX','VITE','PHB','ZEN','GTO','CND','BRD','AST','WPR','DLT','POE','BTS']
 if (pair == 'BTC'):
     for z in coins_list:
         btc_pair = z + 'BTC'
