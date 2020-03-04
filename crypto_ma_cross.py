@@ -115,16 +115,19 @@ def get_crossover(coin, tf, mas):
         else:
             result.append('NONE')
             result.append('NONE')
-    klines2 = client.get_historical_klines(str(coin), str(Client.KLINE_INTERVAL_1DAY), '10 days ago utc')
-    volume_today = klines2[-1][5]
-    volume_1_day_ago = klines2[-2][5]
-    volume_3_days_ago = klines2[-4][5]
-    volume_5_days_ago = klines2[-6][5]
-    volume_7_days_ago = klines2[-8][5]
-    result.append(str("{0:.2f}".format((float(volume_today)-float(volume_1_day_ago)) / float(volume_1_day_ago) * 100)) + '%')
-    result.append(str("{0:.2f}".format((float(volume_today)-float(volume_3_days_ago)) / float(volume_3_days_ago) * 100)) + '%')
-    result.append(str("{0:.2f}".format((float(volume_today)-float(volume_7_days_ago)) / float(volume_7_days_ago) * 100)) + '%')
-    df = pd.DataFrame([result], columns=['Pair', str(mas[0]), '#', str(mas[1]), '#', str(mas[2]), '#', str(mas[3]), '#','1D', '3D', '7D'])
+    klines2 = client.get_historical_klines(str(coin), str(Client.KLINE_INTERVAL_1DAY), '14 days ago utc')
+    volume_1_day = float(klines2[-1][5])
+    volume_2_day = float(klines2[-2][5])
+    volume_3_days = float(klines2[-2][5]) + float(klines2[-3][5]) + float(klines2[-4][5])
+    volume_3_6_days = float(klines2[-5][5]) + float(klines2[-6][5]) + float(klines2[-7][5])
+    volume_7_days = float(klines2[-1][5]) + float(klines2[-2][5]) + float(klines2[-3][5]) + float(klines2[-4][5]) + float(klines2[-5][5]) + float(klines2[-6][5]) + float(klines2[-7][5])
+    volume_7_14_days = float(klines2[-8][5]) + float(klines2[-9][5]) + float(klines2[-10][5]) + float(klines2[-11][5]) + float(klines2[-12][5]) + float(klines2[-13][5]) + float(klines2[-14][5])
+    result.append(str("{0:.2f}".format(volume_1_day)))
+    result.append(str("{0:.2f}".format((float(volume_1_day)-float(volume_2_day)) / float(volume_2_day) * 100)) + '%')
+    result.append(str("{0:.2f}".format((float(volume_3_days)-float(volume_3_6_days)) / float(volume_3_6_days) * 100)) + '%')
+    result.append(str("{0:.2f}".format((float(volume_7_days)-float(volume_7_14_days)) / float(volume_7_14_days) * 100)) + '%')
+
+    df = pd.DataFrame([result], columns=['Pair', str(mas[0]), '#', str(mas[1]), '#', str(mas[2]), '#', str(mas[3]), '#', '24H Vol', '1D', '3D', '7D'])
     return df
     #return result
 
