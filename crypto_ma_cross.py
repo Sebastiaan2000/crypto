@@ -134,16 +134,22 @@ def get_crossover(coin, tf, mas):
 
 timeframe = input('timeframe')
 pair = input ('pair')
-if (pair == 'ETH'):
-    list = ETH_pairs
-elif (pair == 'BTC'):
-    list = BTC_pairs
+new_list = []
+coins_list = ['BTC','ETH','XRP','LTC','BCHSV','EOS','BNB','XTZ ','LINK','ADA','XLM','XMR','DASH','NEO','ETC','TRX','ATOM','HEDG','ONT','VET','BAT','WRX','COTI','KNC','ALGO','RVN','REN','KAVA','ONE','LOOM','ENJ','AION','BQX','POLY ','POWR','FET','TROY','MANA','DATA','ZEC','XEM ','ZRX','RDN','IOST','TOMO','BLZ','LSK','PERL','WAN','ZIL','OMG','BEAM','TNT','DUSK','PPT','GRS','REP','EVX','ARN','ELF','LEND','STRAT','COS','MTH','RPA','KMD','SNT','FUN','QLC','ONG','LRC','PIVX','VITE','PHB','ZEN','GTO','CND','BRD','AST','WPR','DLT','POE','BTS']
+if (pair == 'BTC'):
+    for z in coins_list:
+        btc_pair = z + 'BTC'
+        new_list.append(btc_pair)
+
 elif (pair == 'USDT'):
-    list = USDT_pairs
+    for z in coins_list:
+        usd_pair = str(z + 'USDT')
+        new_list.append(usd_pair)
+
 ma_list = [[10,20], [7,20], [20,50], [20,100]]
 #print ('PAIR', ma_list[0][0] , '/' , ma_list[0][1] , ' , ' ,ma_list[1][0] , '/' , ma_list[1][1])
 df2 = pd.DataFrame()
-for coins in list:
+for coins in new_list[::1]:
     # usage: coins list, timeframe, ma_x, ma_y
     new_result = get_crossover(coins, str(timeframe), ma_list)
     df2 = df2.append(new_result, ignore_index=True)
