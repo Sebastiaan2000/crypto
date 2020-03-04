@@ -129,22 +129,27 @@ def get_crossover(coin, tf, mas):
     result.append(str("{0:.2f}".format((float(volume_7_days)-float(volume_7_14_days)) / float(volume_7_14_days) * 100)) + '%')
 
     df = pd.DataFrame([result], columns=['Pair', str(mas[0]), '#', str(mas[1]), '#', str(mas[2]), '#', str(mas[3]), '#', 'Price', '24 HVolume','1D', '3D', '7D'])
+    print(coin)
     return df
     #return result
 
 timeframe = input('timeframe')
 pair = input ('pair')
 new_list = []
-coins_list = ['BTC','ETH','XRP','LTC','BCH','EOS','BNB','XTZ','LINK','ADA','XLM','XMR','DASH','NEO','ETC','TRX','ATOM','HEDG','ONT','VET','BAT','WRX','COTI','KNC','ALGO','RVN','REN','KAVA','ONE','LOOM','ENJ','AION','BQX','POLY ','POWR','FET','TROY','MANA','DATA','ZEC','XEM ','ZRX','RDN','IOST','TOMO','BLZ','LSK','PERL','WAN','ZIL','OMG','BEAM','TNT','DUSK','PPT','GRS','REP','EVX','ARN','ELF','LEND','STRAT','COS','MTH','RPA','KMD','SNT','FUN','QLC','ONG','LRC','PIVX','VITE','PHB','ZEN','GTO','CND','BRD','AST','WPR','DLT','POE','BTS']
+coins_list = ['BTC','ETH','XRP','LTC','BCH','EOS','BNB','XTZ','LINK','ADA','XLM','XMR','DASH','NEO','ETC','TRX','ATOM','ONT','VET','BAT','WRX','ALGO','RVN','REN','KAVA','ONE','ENJ','AION','POLY','POWR','FET','TROY','MANA','DATA','ZEC','XEM','ZRX','RDN','IOST','TOMO','BLZ','LSK','PERL','WAN','ZIL','OMG','BEAM','TNT','DUSK','PPT','GRS','REP','EVX','ARN','ELF','LEND','STRAT','COS','MTH','ARPA','KMD','SNT','FUN','QLC','ONG','LRC','PIVX','VITE','PHB','ZEN','GTO','CND','BRD','AST','WPR','DLT','POE','BTS']
 if (pair == 'BTC'):
-    for z in coins_list:
+    for z in coins_list[1:]:
         btc_pair = z + 'BTC'
         new_list.append(btc_pair)
-
+    new_list.append('KNCBTC')
+    new_list.append('LOOMBTC')
+    new_list.append('BQXBTC')
 elif (pair == 'USDT'):
-    for z in coins_list:
-        usd_pair = str(z + 'USDT')
-        new_list.append(usd_pair)
+    no_usdt = ['POLY', 'POWR', 'MANA', 'KMD', 'LEND', 'ELF', 'ARN', 'EVX','REP','GRS', 'PPT', 'TNT','BLZ','RDN','XEM', 'POE','DLT', 'WPR','AST','BRD','CND', 'ZEN', 'PHB','PIVX','LRC','QLC','SNT']
+    for y in coins_list:
+        if (y not in no_usdt):
+            usd_pair = str(y + 'USDT')
+            new_list.append(usd_pair)
 
 ma_list = [[10,20], [7,20], [20,50], [20,100]]
 #print ('PAIR', ma_list[0][0] , '/' , ma_list[0][1] , ' , ' ,ma_list[1][0] , '/' , ma_list[1][1])
