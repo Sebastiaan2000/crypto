@@ -157,5 +157,5 @@ for coins in new_list[::1]:
     # usage: coins list, timeframe, ma_x, ma_y
     new_result = get_crossover(coins, str(timeframe), ma_list)
     df2 = df2.append(new_result, ignore_index=True)
-with pd.option_context('display.max_rows', None):
-    return df2
+pd.set_option('display.max_rows', None)
+df2
